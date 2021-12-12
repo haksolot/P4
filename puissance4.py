@@ -32,7 +32,7 @@ def Placement(numCol):
     return grille
 #---------------------------------------------------------------------------------#
 
-#-------------------------Vérification de vistoire horizontale--------------------------#
+#-------------------------Vérification de victoire horizontale--------------------------#
 def verifHoriz(grille):
     for i in range(len(grille)-1, -1, -1):
         for j in range(len(grille[i])-1, -1, -1):
@@ -52,21 +52,41 @@ def verifVerti(grille):
                 return 2
 #-------------------------------------------------------------------------------------#
 
+#------Vérification d'une victoire par diagonale montante-----#
+def verifDiagoM(grille):
+    for i in range(len(grille)-1, -1, -1):
+        for j in range(len(grille[i])-1, -1, -1):
+            if (grille[i][j] + grille[i-1][j-1] + grille[i-2][j-2] + grille[i-3][j-3])==40:
+                return 1
+            elif (grille[i][j] + grille[i-1][j-1] + grille[i-2][j-2] + grille[i-3][j-3])==80:
+                return 2
+#--------------------------------------------------------------#
+
+#------Vérification d'une victoire par diagonale déscendante-----#
+def verifDiagoD(grille):
+        for i in range(len(grille)-1, -1, -1):
+            for j in range(0, 3, +1):
+                if (grille[i][j] + grille[i-1][j+1] + grille[i-2][j+2] + grille[i-3][j+3])==40:
+                    return 1
+                elif (grille[i][j] + grille[i-1][j+1] + grille[i-2][j+2] + grille[i-3][j+3])==80:
+                    return 2
+#-----------------------------------------------------------------#
+
+
 #----------------------------Vérification Win----------------------#
-def verifWin(horiz, verti, diago):
+def verifWin(horiz, verti, diagoM, diagoD):
     if horiz != None:
         return horiz
     elif verti != None:
         return verti
-    elif diago != None:
-        return diago
+    elif diagoM != None:
+        return diagoM
+    elif diagoD != None:
+        return diagoD
     else:
         return 0
 #-------------------------------------------------------------------#
 
-#--------------------Vérification de victoire diagonale----------#
-#   Rien pour le moment 
-#----------------------------------------------------------------#
 tour = 1
 win = 0
 while win == 0:
@@ -76,8 +96,8 @@ while win == 0:
     if verifBornes(numCol) == 1:
         print(Placement(numCol))
 
-    if verifWin(verifHoriz(grille), verifVerti(grille), fonctiondiagonal) != 0:
-        print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), fonctiondiagonal)), "gagne !")
+    if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
+        print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
         break
 
     tour += 1
