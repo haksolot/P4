@@ -96,9 +96,9 @@ def affichage(grille):
             if grille[i][j] == 1:
                 tmp = " "
             elif  grille[i][j] == 10:
-                tmp = "¤"
+                tmp = "O"
             elif  grille[i][j] == 20:
-                tmp = "@"
+                tmp = "X"
             plateau = plateau[0:len(plateau)] + "|" + tmp
             if j == len(grille[i])-1:
                 plateau = plateau[0:len(plateau)] + "|\n"
@@ -109,6 +109,10 @@ tour = 1
 win = 0
 
 while win == 0:
+
+    if tour == 1:
+        print(affichage(grille))
+        
 
     numCol = int(input('Numéro colonne :'))
 
@@ -125,4 +129,6 @@ while win == 0:
         break
 
     tour += 1
+
+
 
