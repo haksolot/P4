@@ -87,6 +87,24 @@ def verifWin(horiz, verti, diagoM, diagoD):
         return 0
 #-------------------------------------------------------------------#
 
+#--------------- Afiche les pions dans le cadriage----------#
+def affichage(grille):
+    plateau = " 1 2 3 4 5 6 7\n _ _ _ _ _ _ _ \n"
+    tmp = " "
+    for i in range(0, len(grille), +1):
+        for j in range(0, len(grille[i]), +1):
+            if grille[i][j] == 1:
+                tmp = " "
+            elif  grille[i][j] == 10:
+                tmp = "¤"
+            elif  grille[i][j] == 20:
+                tmp = "@"
+            plateau = plateau[0:len(plateau)] + "|" + tmp
+            if j == len(grille[i])-1:
+                plateau = plateau[0:len(plateau)] + "|\n"
+    return plateau
+#-----------------------------------------------------------#
+
 tour = 1
 win = 0
 
@@ -98,7 +116,9 @@ while win == 0:
         print("Ce numéro n'est pas compris dans la grille")
         tour -= 1
     else:
-        print(Placement(numCol))
+        grille = Placement(numCol)
+        print(affichage(grille))
+
 
     if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
         print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
