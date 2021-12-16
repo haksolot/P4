@@ -9,10 +9,10 @@ grille = [
 
 #--------------------Fonction pour vérifier les bornes max et min de l'input-----------------#
 def verifBornes(numCol):
-    if numCol > 7 or numCol < 0:
-        return 0
-    else:
+    if (numCol > 7 or numCol < 0) == True:
         return 1
+    else:
+        return 0
 #--------------------------------------------------------------------------------------------#
 
 #---------------Fonction changeant la valeur du pion en fonction du tour pour les joueurs--------#
@@ -26,8 +26,8 @@ def valeurPion(tour):
 #--------------------Fonction pour ajouter un pion dans la grille-----------------#
 def Placement(numCol):
     for i in range(len(grille)-1, -1, -1):
-        if grille[i][numCol] == 1:
-            grille[i][numCol] = valeurPion(tour)
+        if grille[i][numCol-1] == 1:
+            grille[i][numCol-1] = valeurPion(tour)
             break
     return grille
 #---------------------------------------------------------------------------------#
@@ -89,11 +89,15 @@ def verifWin(horiz, verti, diagoM, diagoD):
 
 tour = 1
 win = 0
+
 while win == 0:
 
-    numCol = int(input('Numéro colonne :')) - 1 
+    numCol = int(input('Numéro colonne :'))
 
     if verifBornes(numCol) == 1:
+        print("Ce numéro n'est pas compris dans la grille")
+        tour -= 1
+    else:
         print(Placement(numCol))
 
     if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
