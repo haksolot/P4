@@ -126,9 +126,11 @@ def modeMenu():
 
 
 def mode1():
+    global win
     while win == 0:
         global tour
         global grille
+        
 
         print(affichage(grille))
         
@@ -143,6 +145,7 @@ def mode1():
 
         if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
             print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
+            win = 1
             break
 
         else:
