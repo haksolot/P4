@@ -9,12 +9,14 @@ for i in range(nbCol):
 
 #--------------------Fonction pour vérifier les bornes max et min de l'input-----------------#
 def verifBornes(numCol):
-    if type(int(numCol)) == str:
+    try:
+        if (int(numCol) > 7 or int(numCol) < 1) == True:
+            return 1
+        else:
+            return 0
+    except ValueError:
         return 1
-    elif (int(numCol) > 7 or int(numCol) < 1) == True:
-        return 1
-    else:
-        return 0
+    
 #--------------------------------------------------------------------------------------------#
 
 #---------------Fonction changeant la valeur du pion en fonction du tour pour les joueurs--------#
