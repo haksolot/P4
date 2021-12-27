@@ -1,4 +1,5 @@
 import random
+import time
 
 grille = [
     [1,1,1,1,1,1,1],    #
@@ -152,6 +153,63 @@ def mode1():
             tour += 1
             break
 
+def mode2():
+    global win
+    while win == 0:
+        global tour
+        global grille
+        
+
+        print(affichage(grille))
+        
+        if tour % 2 == 1: #----Tour du bot------#
+            numCol = random.randrange(1,7)
+            grille = Placement(numCol)
+            time.sleep(2)
+            print(affichage(grille))
+            if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
+                print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
+                win = 1
+                break
+            else:
+                tour += 1
+                break
+
+        numCol = input('Numéro colonne :')
+
+        if verifBornes(numCol) == 1:
+            print("Ce numéro n'est pas compris dans la grille")
+            tour -= 1
+        else:
+            grille = Placement(numCol)
+            print(affichage(grille))
+
+        if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
+            print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
+            win = 1
+            break
+
+        else:
+            tour += 1
+            break
+
+def mode3():
+    global win
+    while win == 0:
+        global tour
+        global grille
+        print(affichage(grille))
+        numCol = random.randrange(1,7)
+        grille = Placement(numCol)
+        time.sleep(2)
+        print(affichage(grille))
+        if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
+            print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
+            win = 1
+            break
+        else:
+            tour += 1
+            break
 
 win = 0
 mode = 0
@@ -166,6 +224,10 @@ while win == 0:
                 break
     if mode == 1:
         mode1()
+    elif mode == 2:
+        mode2()
+    elif mode == 3:
+        mode3()
 
 
 
