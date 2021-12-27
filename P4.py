@@ -1,14 +1,11 @@
 import random
 import time
 
-grille = [
-    [1,1,1,1,1,1,1],    #
-    [1,1,1,1,1,1,1],    #
-    [1,1,1,1,1,1,1],    #
-    [1,1,1,1,1,1,1],    #---Grille puissance 4
-    [1,1,1,1,1,1,1],    #
-    [1,1,1,1,1,1,1],    #
-]
+nbCol = 6
+grille = []
+for i in range(nbCol):
+    grille.append([1,1,1,1,1,1,1],)
+
 
 #--------------------Fonction pour vérifier les bornes max et min de l'input-----------------#
 def verifBornes(numCol):
@@ -117,8 +114,9 @@ def affichage(grille):
 #-----------------------------------------------------------#
 def modeMenu():
         global mode
-        mode = int(input('1 - 2 Players\n2 - 1 Player + Bot\n3 - Bot only\n\nMode :'))
-        if mode > 3 or mode < 1:
+        print('\033c')
+        mode = int(input('1 - 2 Players\n2 - 1 Player + Bot\n3 - Bot only\n4 - Config (default 6)\n\nMode :'))
+        if mode > 4 or mode < 1:
             mode = 0
             print("Cette option n'existe pas ! Veuillez choisir une option valide")
             return 0
@@ -132,7 +130,7 @@ def mode1():
         global tour
         global grille
         
-
+        print('\033c')
         print(affichage(grille))
         
         numCol = input('Numéro colonne :')
@@ -142,6 +140,7 @@ def mode1():
             tour -= 1
         else:
             grille = Placement(numCol)
+            print('\033c')
             print(affichage(grille))
 
         if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
@@ -159,13 +158,14 @@ def mode2():
         global tour
         global grille
         
-
+        print('\033c')
         print(affichage(grille))
         
         if tour % 2 == 1: #----Tour du bot------#
             numCol = random.randrange(1,7)
             grille = Placement(numCol)
             time.sleep(2)
+            print('\033c')
             print(affichage(grille))
             if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
                 print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
@@ -182,6 +182,7 @@ def mode2():
             tour -= 1
         else:
             grille = Placement(numCol)
+            print('\033c')
             print(affichage(grille))
 
         if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
@@ -198,10 +199,12 @@ def mode3():
     while win == 0:
         global tour
         global grille
+        print('\033c')
         print(affichage(grille))
         numCol = random.randrange(1,7)
         grille = Placement(numCol)
         time.sleep(2)
+        print('\033c')
         print(affichage(grille))
         if verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille)) != 0:
             print("Le joueur", str(verifWin(verifHoriz(grille), verifVerti(grille), verifDiagoM(grille), verifDiagoD(grille))), "gagne !")
@@ -210,6 +213,15 @@ def mode3():
         else:
             tour += 1
             break
+
+def config():
+    global nbCol
+    global grille
+    print('\033c')
+    nbCol = int(input("Hauteur des colonnes: "))
+    grille = []
+    for i in range(nbCol):
+        grille.append([1,1,1,1,1,1,1],)
 
 win = 0
 mode = 0
@@ -228,6 +240,9 @@ while win == 0:
         mode2()
     elif mode == 3:
         mode3()
+    elif mode == 4:
+        config()
+        mode = 0
 
 
 
