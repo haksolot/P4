@@ -16,7 +16,6 @@ def verifBornes(numCol):
             return 0
     except ValueError:
         return 1
-    
 #--------------------------------------------------------------------------------------------#
 
 #---------------Fonction changeant la valeur du pion en fonction du tour pour les joueurs--------#
@@ -29,6 +28,7 @@ def valeurPion(tour):
 
 #--------------------Fonction pour ajouter un pion dans la grille-----------------#
 def Placement(numCol):
+    global tour
     for i in range(len(grille)-1, -1, -1):
         if grille[i][int(numCol)-1] == 1:
             grille[i][int(numCol)-1] = valeurPion(tour)
@@ -117,13 +117,19 @@ def affichage(grille):
 def modeMenu():
         global mode
         print('\033c')
-        mode = int(input('1 - 2 Players\n2 - 1 Player + Bot\n3 - Bot only\n4 - Config (default 6)\n\nMode :'))
-        if mode > 4 or mode < 1:
-            mode = 0
+        try:
+            mode = int(input('1 - 2 Players\n2 - 1 Player + Bot\n3 - Bot only\n4 - Config (default 6)\n\nMode :'))
+            if mode > 4 or mode < 1:
+                mode = 0
+                print("Cette option n'existe pas ! Veuillez choisir une option valide")
+                time.sleep(1)
+                return 0
+            else: 
+                return 1
+        except ValueError:
             print("Cette option n'existe pas ! Veuillez choisir une option valide")
+            time.sleep(1)
             return 0
-        else: 
-            return 1
 
 
 def mode1():
@@ -139,6 +145,7 @@ def mode1():
 
         if verifBornes(numCol) == 1:
             print("Ce numéro n'est pas compris dans la grille")
+            time.sleep(1)
             tour -= 1
         else:
             grille = Placement(numCol)
@@ -181,6 +188,7 @@ def mode2():
 
         if verifBornes(numCol) == 1:
             print("Ce numéro n'est pas compris dans la grille")
+            time.sleep(1)
             tour -= 1
         else:
             grille = Placement(numCol)
