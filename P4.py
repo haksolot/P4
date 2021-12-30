@@ -10,7 +10,7 @@ for i in range(nbCol):
 #--------------------Fonction pour vérifier les bornes max et min de l'input-----------------#
 def verifBornes(numCol):
     try:
-        if (int(numCol) > 7 or int(numCol) < 1) == True:
+        if (int(numCol) > 7 or int(numCol) < 1) == True or not grille[0][int(numCol)-1] == 1:
             return 1
         else:
             return 0
