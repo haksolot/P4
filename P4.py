@@ -1,13 +1,19 @@
-import random
-import time
+import random   #  Librairie pour générer des nombres aléatoire en guise de choix du bot
+import time     #  Librairie pour générer une latence afin d'afficher un message brefement ou allonger le temps de réponse d'un bot
 
+
+#----------------------------------------------------# Génère la grille de jeu avec 6 de hauteur par défaut
 nbCol = 6
 grille = []
 for i in range(nbCol):
     grille.append([1,1,1,1,1,1,1],)
+#----------------------------------------------------#
 
-
-#--------------------Fonction pour vérifier les bornes max et min de l'input-----------------#
+# Cette fonction vérifie:
+    # Que l'input de l'utilisateur soit bien un nombre
+    # Qu'il soit bien compris entre 1 et 7 (largeur de la grille)
+    # Qu'il ne choisie pas une colonne déjà pleine
+# Si il y'a une erreur elle renvoie 1 en guise d'erreur 
 def verifBornes(numCol):
     try:
         if (int(numCol) > 7 or int(numCol) < 1) == True or not grille[0][int(numCol)-1] == 1:
@@ -16,17 +22,15 @@ def verifBornes(numCol):
             return 0
     except ValueError:
         return 1
-#--------------------------------------------------------------------------------------------#
 
-#---------------Fonction changeant la valeur du pion en fonction du tour pour les joueurs--------#
+# Cette fonction génère la valeur du pion du joueur actuel
 def valeurPion(tour):                                                                          
     if (tour % 2) == 0:                                                                        
         return 200                                                                             
     else:                                                                                      
         return 100                                                                             
-#------------------------------------------------------------------------------------------------#
 
-#--------------------Fonction pour ajouter un pion dans la grille-----------------#
+# Place le pion du joueur actuel dans la grille
 def Placement(numCol):
     global tour
     for i in range(len(grille)-1, -1, -1):
@@ -34,9 +38,9 @@ def Placement(numCol):
             grille[i][int(numCol)-1] = valeurPion(tour)
             break
     return grille
-#---------------------------------------------------------------------------------#
 
-#-------------------------Vérification de victoire horizontale--------------------------#
+# Vérifie la victoire horizontale d'un joueur (quand 4 pions sont alignés horizontalement)
+    # Renvoie le numéro du gagnant
 def verifHoriz(grille):
     for i in range(len(grille)-1, -1, -1):
         for j in range(len(grille[i])-1, -1, -1):
@@ -44,9 +48,9 @@ def verifHoriz(grille):
                 return 1
             elif (grille[i][j] + grille[i][j-1] + grille[i][j-2] + grille[i][j-3])==800:
                 return 2
-#---------------------------------------------------------------------------------------#
 
-#---------------------------Vérification de victoire verticale-----------------------#
+# Vérifie la victoire verticale d'un joueur (quand 4 pions sont alignés verticalement)
+    # Renvoie le numéro du gagnant
 def verifVerti(grille):
     for i in range(len(grille)-1, -1, -1):
         for j in range(len(grille[i])-1, -1, -1):
@@ -54,9 +58,9 @@ def verifVerti(grille):
                 return 1
             elif (grille[i][j] + grille[i-1][j] + grille[i-2][j] + grille[i-3][j])==800:
                 return 2
-#-------------------------------------------------------------------------------------#
 
-#------Vérification d'une victoire par diagonale montante-----#
+# Vérifie la victoire en diagonale montante d'un joueur (quand 4 pions sont alignés en diagonale montante)
+    # Renvoie le numéro du gagnant
 def verifDiagoM(grille):
     for i in range(len(grille)-1, -1, -1):
         for j in range(len(grille[i])-1, -1, -1):
@@ -64,9 +68,9 @@ def verifDiagoM(grille):
                 return 1
             elif (grille[i][j] + grille[i-1][j-1] + grille[i-2][j-2] + grille[i-3][j-3])==800:
                 return 2
-#--------------------------------------------------------------#
 
-#------Vérification d'une victoire par diagonale déscendante-----#
+# Vérifie la victoire en diagonale déscendante d'un joueur (quand 4 pions sont alignés en diagonale déscendante)
+    # Renvoie le numéro du gagnant
 def verifDiagoD(grille):
         for i in range(len(grille)-1, -1, -1):
             for j in range(0, 3, +1):
@@ -74,10 +78,9 @@ def verifDiagoD(grille):
                     return 1
                 elif (grille[i][j] + grille[i-1][j+1] + grille[i-2][j+2] + grille[i-3][j+3])==800:
                     return 2
-#-----------------------------------------------------------------#
 
-
-#----------------------------Vérification Win----------------------#
+# Cette fonction regroupe toute les fonctions précedentes de vérification de victoire pour n'en faire qu'une
+    # Renvoie le numéro du gagnant ou 0 si pas de victoire
 def verifWin(horiz, verti, diagoM, diagoD):
     if horiz != None:
         return horiz
@@ -89,9 +92,8 @@ def verifWin(horiz, verti, diagoM, diagoD):
         return diagoD
     else:
         return 0
-#-------------------------------------------------------------------#
 
-#--------------- Afiche les pions dans le cadriage----------#
+# S'occupe de l'affichage en console de la grille et des tours de joueurs
 def affichage(grille):
     global tour
     plateau = " 1 2 3 4 5 6 7\n _ _ _ _ _ _ _ \n"
@@ -113,10 +115,12 @@ def affichage(grille):
     else:                                                                                      
         plateau = plateau[0:len(plateau)] + "\n\nJoueur 1"
     return plateau
-#-----------------------------------------------------------#
+
+# Affichage du menu permettant la selection du mode ou de la configuration
 def modeMenu():
         global mode
         print('\033c')
+        print("><<<<<<<              \n><<    ><<      ><<   \n><<    ><<    > ><<   \n><<<<<<<     >< ><<   \n><<        ><<  ><<   \n><<       ><<<< >< ><<\n><<             ><<   \n")
         try:
             mode = int(input('1 - 2 Players\n2 - 1 Player + Bot\n3 - Bot only\n4 - Config (default 6)\n\nMode :'))
             if mode > 4 or mode < 1:
@@ -131,7 +135,7 @@ def modeMenu():
             time.sleep(1)
             return 0
 
-
+# Mode de jeu ou 2 joueurs (humain) s'affrontent
 def mode1():
     global win
     while win == 0:
@@ -161,6 +165,7 @@ def mode1():
             tour += 1
             break
 
+# Mode de jeu ou un humain et un bot s'affrontent
 def mode2():
     global win
     while win == 0:
@@ -170,7 +175,7 @@ def mode2():
         print('\033c')
         print(affichage(grille))
         
-        if tour % 2 == 1: #----Tour du bot------#
+        if tour % 2 == 1: 
             numCol = random.randrange(1,7)
             grille = Placement(numCol)
             time.sleep(2)
@@ -203,7 +208,7 @@ def mode2():
         else:
             tour += 1
             break
-
+# Mode de jeu ou deux bot s'affrontent
 def mode3():
     global win
     while win == 0:
@@ -212,6 +217,8 @@ def mode3():
         print('\033c')
         print(affichage(grille))
         numCol = random.randrange(1,7)
+        while verifBornes(numCol) == 1:
+            numCol = random.randrange(1,7)
         grille = Placement(numCol)
         time.sleep(2)
         print('\033c')
@@ -224,6 +231,7 @@ def mode3():
             tour += 1
             break
 
+# Configuration de la hauteur de grille
 def config():
     global nbCol
     global grille
@@ -233,6 +241,8 @@ def config():
     for i in range(nbCol):
         grille.append([1,1,1,1,1,1,1],)
 
+
+#--------------------------------------# Partie principale gérant la sélection des modes de jeu
 win = 0
 mode = 0
 tour = 1
@@ -253,7 +263,7 @@ while win == 0:
     elif mode == 4:
         config()
         mode = 0
-
+#--------------------------------------#
 
 
 
