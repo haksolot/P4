@@ -6,8 +6,10 @@ _Les règles du puissances 4 sont simple_
 
 Un joueur gagne la partie au moment ou il aligne 4 de ses pions dans une grille
 (que ça soit verticalement, horizontalement ou encore en diagonale)
+
 ![Victory conditions](https://i.postimg.cc/9McBSb6Q/Screenshot-20220102-132819.png)
 Les pions se placent en haut d'une des 7 colonnes de la grille
+
 Ils tombent sous l'effet de la gravité en bas de celle-ci et s'empilent si d'autre se trouvent en dessous
 
 
