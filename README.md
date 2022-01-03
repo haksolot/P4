@@ -12,7 +12,7 @@ Les pions se placent en haut d'une des 7 colonnes de la grille
 Ils tombent sous l'effet de la gravité en bas de celle-ci et s'empilent si d'autre se trouvent en dessous
 
 
-## Modes:
+## Modes
 - 2 players (2 joueurs s'affrontent tour à tour)
 - 1 player + 1 bot (Un joueur affronte un bot générant des choix aléatoires)
 - 2 bots (Deux bot s'affrontent à tour de rôles remplissant la grille sans action de la part de l'utilisateur)
